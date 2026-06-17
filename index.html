@@ -114,6 +114,77 @@
       gap: 10px;
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .hamburger-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text2);
+      font-size: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+
+    .hamburger-btn:hover {
+      background: var(--gov-light);
+      border-color: var(--gov-mid);
+      color: var(--gov);
+    }
+
+    /* SIDEBAR OVERLAY (mobile/tablet drawer backdrop) */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      top: var(--header-h);
+      background: rgba(10, 30, 25, .4);
+      z-index: 1400;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-mobile-close {
+      display: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 12px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: all .15s;
+    }
+
+    .sidebar-mobile-close:hover {
+      background: #FFE5E5;
+      border-color: #FFBDBD;
+      color: #C0392B;
+    }
+
     .header-badge {
       display: flex;
       align-items: center;
@@ -976,7 +1047,9 @@
       position: absolute;
       top: calc(var(--header-h) + 16px);
       right: 16px;
-      width: 300px;
+      width: min(300px, calc(100vw - 32px));
+      max-height: calc(100vh - var(--header-h) - 32px);
+      overflow-y: auto;
       background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: 16px;
@@ -984,7 +1057,6 @@
       box-shadow: var(--shadow-lg);
       display: none;
       animation: fadeUp .22s cubic-bezier(.22, 1, .36, 1);
-      overflow: hidden;
     }
 
     #info-panel.show {
@@ -1167,7 +1239,9 @@
       position: absolute;
       top: calc(var(--header-h) + 16px);
       right: 16px;
-      width: 310px;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - var(--header-h) - 32px);
+      overflow-y: auto;
       background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: 16px;
@@ -1175,7 +1249,6 @@
       box-shadow: var(--shadow-lg);
       display: none;
       animation: fadeUp .22s cubic-bezier(.22, 1, .36, 1);
-      overflow: hidden;
     }
 
     #route-panel.show {
@@ -1855,43 +1928,229 @@
       font-size: 9px !important;
       border-radius: 6px 0 0 0 !important;
     }
+
+    /* ======================================================
+       RESPONSIVE — TABLET & MOBILE
+       ====================================================== */
+
+    /* Tablet & phone: sidebar becomes a slide-in drawer over the map */
+    @media (max-width: 1024px) {
+      .hamburger-btn {
+        display: flex;
+      }
+
+      .sidebar-mobile-close {
+        display: flex;
+      }
+
+      .layout {
+        height: 100vh;
+      }
+
+      aside {
+        position: fixed;
+        top: var(--header-h);
+        left: 0;
+        bottom: 0;
+        height: calc(100vh - var(--header-h));
+        width: min(340px, 86vw);
+        max-width: 340px;
+        z-index: 1500;
+        transform: translateX(-100%);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1);
+        box-shadow: var(--shadow-lg);
+      }
+
+      aside.open {
+        transform: translateX(0);
+      }
+
+      #map {
+        width: 100%;
+      }
+
+      #map-search-bar {
+        width: min(480px, calc(100% - 32px));
+      }
+
+      #info-panel,
+      #route-panel {
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Phones */
+    @media (max-width: 600px) {
+      header {
+        padding: 0 12px;
+      }
+
+      .logo-sub {
+        display: none;
+      }
+
+      .logo-mark {
+        width: 32px;
+        height: 32px;
+      }
+
+      .logo-name {
+        font-size: 16px;
+      }
+
+      .header-badge .badge-text {
+        display: none;
+      }
+
+      .header-badge {
+        padding: 5px 9px;
+      }
+
+      .btn-tentang .btn-text {
+        display: none;
+      }
+
+      .btn-tentang {
+        padding: 8px 10px;
+      }
+
+      .header-right {
+        gap: 6px;
+      }
+
+      .header-left {
+        gap: 8px;
+      }
+
+      #basemap-switcher {
+        min-width: 0;
+        padding: 8px 9px;
+        max-width: 42vw;
+      }
+
+      .basemap-title {
+        font-size: 8.5px;
+        margin-bottom: 6px;
+      }
+
+      .basemap-btn {
+        font-size: 10px;
+        padding: 6px 7px;
+        gap: 6px;
+      }
+
+      .basemap-thumb {
+        width: 20px;
+        height: 14px;
+      }
+
+      .legend {
+        padding: 9px 11px;
+        max-width: 42vw;
+      }
+
+      .legend-title {
+        margin-bottom: 6px;
+      }
+
+      .legend-item {
+        font-size: 10px;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+
+      .legend-dot {
+        width: 8px;
+        height: 8px;
+      }
+
+      #info-panel,
+      #route-panel {
+        right: 10px;
+        left: 10px;
+        top: calc(var(--header-h) + 10px);
+        max-width: none;
+      }
+
+      .panel-name {
+        font-size: 14.5px;
+      }
+
+      #route-active-bar {
+        right: 10px;
+        left: 10px;
+        bottom: 140px;
+        justify-content: center;
+      }
+
+      .modal-top {
+        padding: 22px 20px 18px;
+      }
+
+      .modal-body {
+        padding: 18px 20px 22px;
+      }
+
+      .modal-stat-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Body scroll lock while the mobile drawer is open */
+    body.drawer-open {
+      overflow: hidden;
+    }
   </style>
 </head>
 
 <body>
 
   <header>
-    <div class="logo">
-      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="36" height="36" rx="10" fill="url(#lg)" />
-        <rect x="15.5" y="9" width="5" height="18" rx="2.5" fill="white" opacity="0.95" />
-        <rect x="9" y="15.5" width="18" height="5" rx="2.5" fill="white" opacity="0.95" />
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#0D7A61" />
-            <stop offset="100%" stop-color="#085544" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div class="logo-text-wrap">
-        <div class="logo-name">HospiTrack</div>
-        <div class="logo-sub">Peta Rumah Sakit · Bandar Lampung</div>
+    <div class="header-left">
+      <button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebarDrawer()" aria-label="Buka daftar rumah sakit">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="logo">
+        <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="10" fill="url(#lg)" />
+          <rect x="15.5" y="9" width="5" height="18" rx="2.5" fill="white" opacity="0.95" />
+          <rect x="9" y="15.5" width="18" height="5" rx="2.5" fill="white" opacity="0.95" />
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0D7A61" />
+              <stop offset="100%" stop-color="#085544" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="logo-text-wrap">
+          <div class="logo-name">HospiTrack</div>
+          <div class="logo-sub">Peta Rumah Sakit · Bandar Lampung</div>
+        </div>
       </div>
     </div>
     <div class="header-right">
       <div class="header-badge">
         <i class="fa-solid fa-hospital"></i>
-        <span><strong id="total-num">0</strong> Rumah Sakit</span>
+        <span><strong id="total-num">0</strong> <span class="badge-text">Rumah Sakit</span></span>
       </div>
       <button class="btn-tentang" onclick="showTentang()">
-        <i class="fa-solid fa-circle-info"></i> Tentang
+        <i class="fa-solid fa-circle-info"></i> <span class="btn-text">Tentang</span>
       </button>
     </div>
   </header>
 
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebarDrawer()"></div>
+
   <div class="layout">
 
-    <aside>
+    <aside id="sidebar">
+      <button class="sidebar-mobile-close" id="sidebar-mobile-close" onclick="closeSidebarDrawer()" aria-label="Tutup daftar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
       <div class="sidebar-search-wrap">
         <div class="sidebar-search-box">
           <span class="sidebar-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -2176,6 +2435,38 @@
     let rpDestCoord = null;
     let routeOriginMarker = null, routeDestMarker = null;
     let rpOriginDebounce = null, rpDestDebounce = null;
+
+    /* ===== SIDEBAR DRAWER (MOBILE & TABLET) ===== */
+    const MOBILE_BREAKPOINT = 1024;
+
+    function openSidebarDrawer() {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('sidebar-overlay').classList.add('show');
+      document.body.classList.add('drawer-open');
+    }
+
+    function closeSidebarDrawer() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebar-overlay').classList.remove('show');
+      document.body.classList.remove('drawer-open');
+    }
+
+    function toggleSidebarDrawer() {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar.classList.contains('open')) {
+        closeSidebarDrawer();
+      } else {
+        openSidebarDrawer();
+      }
+    }
+
+    function isMobileLayout() {
+      return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
+    window.addEventListener('resize', () => {
+      if (!isMobileLayout()) closeSidebarDrawer();
+    });
 
     /* ===== INIT MAP & LAYERS ===== */
     function initMap() {
@@ -2526,6 +2817,7 @@
     function showPanel(rs) {
       activeRs = rs;
       renderList();
+      if (isMobileLayout()) closeSidebarDrawer();
 
       document.getElementById('p-badge').className = 'panel-badge ' + rs.kategori;
       document.getElementById('p-badge').textContent = rs.kategori === 'gov' ? 'Pemerintah' : 'Swasta';
