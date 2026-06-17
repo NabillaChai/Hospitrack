@@ -677,12 +677,6 @@
       color: #1565A0;
     }
 
-    .rs-kepemilikan {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
     .rs-addr {
       font-size: 10.5px;
       color: var(--muted);
@@ -874,174 +868,6 @@
       background: linear-gradient(135deg, #2d4a2d 0%, #3a6b3a 30%, #4a7c6f 60%, #1a3a1a 100%);
     }
 
-    /* ======================================================
-       MAP SEARCH BAR (Google Maps style) — overlay on map
-       ====================================================== */
-    #map-search-bar {
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(480px, calc(100% - 340px - 40px));
-      z-index: 800;
-      display: none;
-    }
-
-    #map-search-bar.show {
-      display: block;
-    }
-
-    .msb-box {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 28px;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      align-items: center;
-      gap: 0;
-      padding: 0 16px 0 18px;
-      height: 48px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    .msb-box:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(10, 102, 82, .12), var(--shadow-lg);
-    }
-
-    .msb-icon {
-      color: var(--muted);
-      font-size: 14px;
-      flex-shrink: 0;
-      margin-right: 12px;
-    }
-
-    .msb-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 14px;
-      font-family: inherit;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .msb-input::placeholder {
-      color: var(--muted);
-      font-weight: 400;
-    }
-
-    .msb-clear {
-      background: var(--border);
-      border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--muted);
-      cursor: pointer;
-      flex-shrink: 0;
-      margin-left: 8px;
-      transition: all .15s;
-    }
-
-    .msb-clear.show {
-      display: flex;
-    }
-
-    .msb-clear:hover {
-      background: #FFBDBD;
-      color: #C0392B;
-    }
-
-    /* Map search autocomplete */
-    .msb-dropdown {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      margin-top: 6px;
-      box-shadow: var(--shadow-lg);
-      display: none;
-      overflow: hidden;
-      max-height: 320px;
-      overflow-y: auto;
-    }
-
-    .msb-dropdown.show {
-      display: block;
-    }
-
-    .msb-ac-item {
-      padding: 10px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border);
-      transition: background .12s;
-    }
-
-    .msb-ac-item:last-child {
-      border-bottom: none;
-    }
-
-    .msb-ac-item:hover {
-      background: var(--surface2);
-    }
-
-    .msb-ac-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .msb-ac-icon.rs-gov {
-      background: var(--gov-light);
-      color: var(--gov);
-    }
-
-    .msb-ac-icon.rs-swasta {
-      background: var(--swasta-light);
-      color: var(--swasta);
-    }
-
-    .msb-ac-icon.place {
-      background: #EEF2FF;
-      color: #4F46E5;
-    }
-
-    .msb-ac-main {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.35;
-    }
-
-    .msb-ac-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .msb-section-label {
-      padding: 8px 16px 4px;
-      font-size: 9px;
-      font-weight: 800;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: var(--surface2);
-    }
 
     /* ======================================================
        INFO PANEL — RS detail (right side)
@@ -1234,6 +1060,118 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 16px rgba(10, 102, 82, .4);
     }
+/* ======================================================
+   ROUTE PANEL — Compact summary (otomatis tampil begitu
+   rute berhasil dihitung, menggantikan form besar supaya
+   peta/rute tidak tertutup dan tidak perlu ditutup manual)
+   ====================================================== */
+.rp-compact {
+  display: none;
+  padding: 10px 12px;
+  align-items: center;
+  gap: 10px;
+}
+
+#route-panel.rp-collapsed .rp-full {
+  display: none;
+}
+
+#route-panel.rp-collapsed .rp-compact {
+  display: flex;
+}
+
+.rp-compact-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--gov-light);
+  color: var(--gov);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.rp-compact-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.rp-compact-route {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rp-compact-metrics {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gov);
+  margin-top: 2px;
+}
+
+.rp-compact-vehicle {
+  display: flex;
+  gap: 3px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+.rp-compact-veh-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+
+.rp-compact-veh-btn.active {
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.rp-compact-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+
+.rp-compact-btn:hover {
+  background: var(--gov-light);
+  border-color: var(--gov-mid);
+  color: var(--gov);
+}
+
+.rp-compact-btn.rp-compact-cancel:hover {
+  background: #FFE5E5;
+  border-color: #FFBDBD;
+  color: #C0392B;
+}
 
     /* ======================================================
        ROUTE PANEL — Google Maps Style (full redesign)
@@ -1633,35 +1571,6 @@
       color: #C0392B;
     }
 
-    /* Route active info bar */
-    #route-active-bar {
-      position: absolute;
-      bottom: calc(155px + env(safe-area-inset-bottom));
-      right: 16px;
-      background: var(--surface);
-      border: 1.5px solid var(--gov-mid);
-      border-radius: 12px;
-      padding: 10px 14px;
-      box-shadow: var(--shadow-md);
-      z-index: 700;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    #route-active-bar.show {
-      display: flex;
-    }
-
-    #route-active-bar i {
-      color: var(--gov);
-    }
-
-    #route-active-bar span {
-      font-weight: 600;
-      color: var(--text2);
-    }
 
     /* TOAST */
     #toast {
@@ -1977,10 +1886,6 @@
         width: 100%;
       }
 
-      #map-search-bar {
-        width: min(480px, calc(100% - 32px));
-      }
-
       #info-panel,
       #route-panel {
         right: 16px;
@@ -2086,13 +1991,6 @@
 
       .panel-name {
         font-size: 14.5px;
-      }
-
-      #route-active-bar {
-        right: 10px;
-        left: 10px;
-        bottom: calc(140px + env(safe-area-inset-bottom));
-        justify-content: center;
       }
 
       .modal-top {
@@ -2236,11 +2134,6 @@
         </div>
       </div>
 
-      <div id="route-active-bar">
-        <i class="fa-solid fa-route"></i>
-        <span id="route-active-text">Rute aktif</span>
-      </div>
-
       <div id="info-panel">
         <div class="panel-header">
           <button class="panel-close" onclick="closePanel()"><i class="fa-solid fa-xmark"></i></button>
@@ -2288,71 +2181,86 @@
       </div>
 
       <div id="route-panel">
-        <div class="rp-header">
-          <div class="rp-title-row">
-            <div class="rp-title"><i class="fa-solid fa-route"></i> Rute Navigasi</div>
-            <button class="rp-close" onclick="closeRoutePanel()"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-
-          <div class="rp-waypoints" id="rp-waypoints">
-            <div class="rp-waypoint-row">
-              <div class="rp-dot-col">
-                <div class="rp-dot origin"></div>
-                <div class="rp-vert-line"></div>
-              </div>
-              <div class="rp-input-wrap">
-                <input type="text" class="rp-input" id="rp-origin-input" placeholder="Titik awal…" autocomplete="off" />
-                <button class="rp-input-clear" id="rp-origin-clear" onclick="clearRpInput('origin')"><i
-                    class="fa-solid fa-xmark"></i></button>
-                <div class="rp-ac-dropdown" id="rp-origin-ac"></div>
-              </div>
+        <div class="rp-full" id="rp-full">
+            <div class="rp-header">
+            <div class="rp-title-row">
+                <div class="rp-title"><i class="fa-solid fa-route"></i> Rute Navigasi</div>
+                <button class="rp-close" onclick="closeRoutePanel()"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <button class="rp-swap-btn" title="Tukar titik" onclick="swapWaypoints()"><i
-                class="fa-solid fa-right-left"></i></button>
-            <div class="rp-waypoint-row">
-              <div class="rp-dot-col">
-                <div class="rp-dot dest"></div>
-              </div>
-              <div class="rp-input-wrap">
-                <input type="text" class="rp-input" id="rp-dest-input" placeholder="Tujuan…" autocomplete="off" />
-                <button class="rp-input-clear" id="rp-dest-clear" onclick="clearRpInput('dest')"><i
-                    class="fa-solid fa-xmark"></i></button>
-                <div class="rp-ac-dropdown" id="rp-dest-ac"></div>
-              </div>
+
+            <div class="rp-waypoints" id="rp-waypoints">
+                <div class="rp-waypoint-row">
+                <div class="rp-dot-col">
+                    <div class="rp-dot origin"></div>
+                    <div class="rp-vert-line"></div>
+                </div>
+                <div class="rp-input-wrap">
+                    <input type="text" class="rp-input" id="rp-origin-input" placeholder="Titik awal…" autocomplete="off" />
+                    <button class="rp-input-clear" id="rp-origin-clear" onclick="clearRpInput('origin')"><i
+                        class="fa-solid fa-xmark"></i></button>
+                    <div class="rp-ac-dropdown" id="rp-origin-ac"></div>
+                </div>
+                </div>
+                <button class="rp-swap-btn" title="Tukar titik" onclick="swapWaypoints()"><i
+                    class="fa-solid fa-right-left"></i></button>
+                <div class="rp-waypoint-row">
+                <div class="rp-dot-col">
+                    <div class="rp-dot dest"></div>
+                </div>
+                <div class="rp-input-wrap">
+                    <input type="text" class="rp-input" id="rp-dest-input" placeholder="Tujuan…" autocomplete="off" />
+                    <button class="rp-input-clear" id="rp-dest-clear" onclick="clearRpInput('dest')"><i
+                        class="fa-solid fa-xmark"></i></button>
+                    <div class="rp-ac-dropdown" id="rp-dest-ac"></div>
+                </div>
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
 
-        <div class="rp-metrics" id="rp-metrics" style="display:none">
-          <div class="rp-metric">
-            <div class="rp-metric-val" id="rp-dist">—</div>
-            <div class="rp-metric-lbl">Jarak</div>
-          </div>
-          <div class="rp-metric">
-            <div class="rp-metric-val" id="rp-time">—</div>
-            <div class="rp-metric-lbl">Estimasi</div>
-          </div>
-        </div>
+            <div class="rp-metrics" id="rp-metrics" style="display:none">
+            <div class="rp-metric">
+                <div class="rp-metric-val" id="rp-dist">—</div>
+                <div class="rp-metric-lbl">Jarak</div>
+            </div>
+            <div class="rp-metric">
+                <div class="rp-metric-val" id="rp-time">—</div>
+                <div class="rp-metric-lbl">Estimasi</div>
+            </div>
+            </div>
 
-        <div class="rp-actions">
-          <div class="rp-vehicle-group">
-            <button class="rp-vehicle-btn active" id="rp-btn-mobil" onclick="selectVehicle('mobil')">
-              <i class="fa-solid fa-car"></i> Mobil
+            <div class="rp-actions">
+            <div class="rp-vehicle-group">
+                <button class="rp-vehicle-btn active" id="rp-btn-mobil" onclick="selectVehicle('mobil')">
+                <i class="fa-solid fa-car"></i> Mobil
+                </button>
+                <button class="rp-vehicle-btn" id="rp-btn-motor" onclick="selectVehicle('motor')">
+                <i class="fa-solid fa-motorcycle"></i> Motor
+                </button>
+            </div>
+            <button class="btn-show-route" id="btn-show-route" onclick="calculateAndShowRoute()">
+                <i class="fa-solid fa-diamond-turn-right"></i> Tampilkan Rute
             </button>
-            <button class="rp-vehicle-btn" id="rp-btn-motor" onclick="selectVehicle('motor')">
-              <i class="fa-solid fa-motorcycle"></i> Motor
+            <button class="btn-clear-route" onclick="stopNavigation()">
+                <i class="fa-solid fa-circle-xmark"></i> Batalkan Navigasi
             </button>
-          </div>
-          <button class="btn-show-route" id="btn-show-route" onclick="calculateAndShowRoute()">
-            <i class="fa-solid fa-diamond-turn-right"></i> Tampilkan Rute
-          </button>
-          <button class="btn-clear-route" onclick="stopNavigation()">
-            <i class="fa-solid fa-circle-xmark"></i> Batalkan Navigasi
-          </button>
+            </div>
         </div>
-      </div>
 
-    </div>
+        <!-- Tampilan ringkas: otomatis muncul begitu rute berhasil dihitung -->
+        <div class="rp-compact" id="rp-compact">
+            <div class="rp-compact-icon"><i class="fa-solid fa-route"></i></div>
+            <div class="rp-compact-text">
+            <div class="rp-compact-route" id="rp-compact-route">—</div>
+            <div class="rp-compact-metrics" id="rp-compact-metrics">—</div>
+            </div>
+            <div class="rp-compact-vehicle">
+            <button class="rp-compact-veh-btn active" id="rp-c-btn-mobil" onclick="selectVehicle('mobil')" title="Mobil"><i class="fa-solid fa-car"></i></button>
+            <button class="rp-compact-veh-btn" id="rp-c-btn-motor" onclick="selectVehicle('motor')" title="Motor"><i class="fa-solid fa-motorcycle"></i></button>
+            </div>
+            <button class="rp-compact-btn" onclick="expandRoutePanel()" title="Ubah rute"><i class="fa-solid fa-pen"></i></button>
+            <button class="rp-compact-btn rp-compact-cancel" onclick="stopNavigation()" title="Batalkan navigasi"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        </div>
   </div>
 
   <div id="toast"></div>
@@ -2846,7 +2754,6 @@
 
       document.getElementById('info-panel').classList.add('show');
       document.getElementById('route-panel').classList.remove('show');
-      document.getElementById('route-active-bar').classList.remove('show');
 
       map.setView([rs.lat, rs.lng], 15);
       if (markers[rs.id]) markers[rs.id].openPopup();
@@ -2865,6 +2772,7 @@
 
       rpDestCoord = { lat: rs.lat, lng: rs.lng, name: rs.nama };
       document.getElementById('rp-dest-input').value = rs.nama;
+      document.getElementById('route-panel').classList.remove('rp-collapsed');
       document.getElementById('rp-dest-clear').classList.add('show');
 
       if (userLat !== null) {
@@ -2880,6 +2788,10 @@
       document.getElementById('rp-metrics').style.display = 'none';
       document.getElementById('info-panel').classList.remove('show');
       document.getElementById('route-panel').classList.add('show');
+    }
+
+    function expandRoutePanel() {
+        document.getElementById('route-panel').classList.remove('rp-collapsed');
     }
 
     function closeRoutePanel() {
@@ -3042,6 +2954,8 @@
       vehicleMode = v;
       document.getElementById('rp-btn-mobil').classList.toggle('active', v === 'mobil');
       document.getElementById('rp-btn-motor').classList.toggle('active', v === 'motor');
+      document.getElementById('rp-c-btn-mobil').classList.toggle('active', v === 'mobil');
+      document.getElementById('rp-c-btn-motor').classList.toggle('active', v === 'motor');
       if (routeLayer) calculateAndShowRoute();
     }
 
@@ -3106,8 +3020,11 @@
       document.getElementById('rp-time').textContent = timeStr;
       document.getElementById('rp-metrics').style.display = 'grid';
 
-      document.getElementById('route-active-text').textContent = `${fmtDist(distKm)} · ${timeStr} · ${vehicleMode === 'mobil' ? '🚗' : '🏍️'}`;
-      document.getElementById('route-active-bar').classList.add('show');
+      const vehicleEmoji = vehicleMode === 'mobil' ? '🚗' : '🏍️';
+        document.getElementById('rp-compact-route').textContent = `${o.name} → ${d.name}`;
+        document.getElementById('rp-compact-metrics').textContent = `${fmtDist(distKm)} · ${timeStr} ${vehicleEmoji}`;
+        document.getElementById('route-panel').classList.add('rp-collapsed');
+        showToast('Rute berhasil ditampilkan');
       showToast('Rute berhasil ditampilkan');
     }
 
